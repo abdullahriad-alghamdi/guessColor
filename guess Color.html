@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #ff9900;
+            text-align: center;
+            height: 10vh;
+        }
+        
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 15rem;
+        }
+        
+        h1 {
+            font-size: rem;
+            color: #fff;
+            font-weight: 900;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .btn {
+            font-family: fantasy;
+            background-color: #000000ff;
+            border: none;
+            color: #ffffffee;
+            padding: 1.5rem 5rem;
+            border-radius: 1rem;
+            font-size: 25px;
+            cursor: pointer;
+        }
+        
+        #context {
+            color: rgb(248, 248, 248);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="div">
+        <h2 id="context">Guess what color i will be before <u>clicking!</u> </h2>
+        <span id="text">Hello world!</span>
+        <button class="btn" id="color-btn">start</button>
+
+    </div>
+
+    <script>
+        const btn = document.getElementById('color-btn').addEventListener("click", function() {
+
+            setTimeout(function() {
+
+                document.getElementById('color-btn').style.boxShadow = "1px 5px 5px #ffffffb6";
+                document.getElementById('color-btn').style.color = colorRGB();
+                document.getElementById('color-btn').style.backgroundColor = colorRGB();
+                document.getElementById('color-btn').style.border = "2px solid ";
+                //In an event, this refers to the element that received the event (the target element) //https://www.w3schools.com/js/js_this.asp         
+                document.body.style.transition = "all 0.5s";
+                document.getElementById('text').style.color = colorRGB();
+                document.getElementById('text').style.backgroundColor = colorRGB();
+                document.getElementById('text').style.fontSize = `${Math.floor(Math.random()*10)}rem`;
+                document.getElementById('text').style.fontWeight = `${Math.floor(Math.random()*900)}`;
+            }, 1000);
+
+            let x = setInterval(function() {
+                let randomColor1 = randomColor();
+                let randomColor2 = randomColor();
+                let randomColor3 = randomColor();
+                document.body.style.backgroundColor = colorRGB();
+
+            }, 1000);
+            let again = document.createElement('h1');
+            let text = document.createTextNode('Again!');
+            let div = document.getElementById('div');
+            let context = document.getElementById('context');
+
+            setTimeout(function() { //this is the way to stop the interval
+
+                context.style.display = "none";
+            }, 100);
+            setTimeout(function() { //this is the way to stop the interval
+                again.appendChild(text);
+                // append before the button 
+                div.insertBefore(again, div.childNodes[5]);
+            }, 100);
+            setTimeout(function() { //this is the way to stop the interval
+                clearInterval(x);
+                //delete the element again after 5 seconds
+                div.removeChild(again);
+                context.style.display = "block";
+            }, 5000);
+
+
+        })
+
+        //this is the way to create a function that will return a random rgb colors
+        function randomColor() { // now this function to reduce the repetition of the code so it will be cleaner code
+            return Math.floor(Math.random() * 256);
+        }
+        // you may ask why we are using Math.floor(Math.random * 256) because we want to get a random whole number from 0 to 255 the rgb color is from 0 to 255
+        // you could ask why not use one function for both the randomColor and the colorRGB  because it is best practice to have one function for one thing
+
+        function colorRGB() { // this better way to do it because it is less code and it is dynamic
+            let randomColorR = randomColor(); // 2nd way //this way is good because it is dynamic //if we want to add more colors we don't have to add it manually
+            let randomColorG = randomColor(); // the color will be random because every time we call the function it will give us a random number
+            let randomColorB = randomColor();
+            return `rgb(${randomColorR},${randomColorG},${randomColorB})`;
+        }
+        //========================================================================================================
+    </script>
+</body>
+
+</html>
